@@ -1,14 +1,16 @@
 import e from "express";
 import mysql from "mysql2";
 import cors from "cors";
+import dotenv from 'dotenv';
+dotenv.config();
 const app = e();
 app.use(e.json());
 app.use(cors());
 const db = mysql.createConnection({
-    host: "localhost",
-    database: "storedb",
-    password: "Bharat@123",
-    user: "root"
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    user: process.env.DB_USER
 })
 app.get('/', (req, res) => {
     res.json("Hello this is the backend")
@@ -85,6 +87,6 @@ app.put('/books/:id', (req, res) => {
         return res.json("Book is updated successfully");
     })
 })
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
     console.log('Connected to backend!')
 })
